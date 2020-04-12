@@ -1,0 +1,9 @@
+{
+  "name": "React-Node",
+  "version": "1.0.0",
+  "description": "A front-end and back-end in React and Node",
+  "main": "index.js",
+  "repository": "https://github.com/bryantbrock/React-Node.git",
+  "author": "bryantbrock <bryantleebrock@gmail.com>",
+  "license": "MIT"
+}
