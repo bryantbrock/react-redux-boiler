@@ -11,11 +11,14 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ATypes.REGISTRY_SUBMITTED:
+    case ATypes.LOGIN_SUBMITTED:
       return {
         ...state,
         isLoading: true,
       }
     case ATypes.REGISTRY_SUCCESS:
+    case ATypes.LOGIN_SUCCESS:
+      localStorage.setItem('token', action.payload.token)
       return {
         ...state,
         user: action.payload,
@@ -23,6 +26,7 @@ export default function(state = initialState, action) {
         isLoading: false,
       }
     case ATypes.REGISTRY_FAILED:
+    case ATypes.LOGIN_FAILED:
       return {
         ...state,
         isAuthenticated: false,

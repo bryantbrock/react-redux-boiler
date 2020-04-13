@@ -2,8 +2,36 @@
   "name": "react-node",
   "version": "1.0.0",
   "description": "A front-end and back-end in React and Node",
-  "main": "index.js",
+  "main": "server.js",
+  "engines": {
+    "node": "8.15.0"
+  },
   "repository": "https://github.com/bryantbrock/React-Node.git",
   "author": "bryantbrock <bryantleebrock@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.7",
+    "nodemon": "^2.0.3",
+    "pusher": "^3.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
 }

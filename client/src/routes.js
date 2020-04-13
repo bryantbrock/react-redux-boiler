@@ -1,5 +1,5 @@
 import {Home} from 'components'
-import {Register} from 'app/auth/components'
+import {Register, Login} from 'app/auth/components'
 
 export const routes = [
   {
@@ -10,5 +10,9 @@ export const routes = [
   {
     path: "/sign-up",
     component: Register,
+  },
+  {
+    path: "/login",
+    component: Login,
   },
 ]

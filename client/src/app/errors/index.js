@@ -1,0 +1,1 @@
+export {default as ErrorReducer} from 'app/auth/reducer'
