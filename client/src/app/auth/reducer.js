@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
       localStorage.setItem('token', action.payload.token)
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
         isAuthenticated: true,
         isLoading: false,
       }

@@ -3,7 +3,7 @@ import {ATypes} from 'app/actionTypes'
 
 const getToken = getState => getState().auth.token
 
-export const registerUser = user => (dispatch, getState) => {
+export const register = user => (dispatch, getState) => {
   dispatch({type: ATypes.REGISTRY_SUBMITTED})
   req.postJSON('/api/auth/sign-up', getToken(getState), user)
     .then(res => dispatch({type: ATypes.REGISTRY_SUCCESS, payload: res.data}))

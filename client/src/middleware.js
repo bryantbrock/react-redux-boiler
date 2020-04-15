@@ -4,7 +4,6 @@ export const logger = store => next => action => {
   console.log('dispatching', action)
   let res = next(action)
   console.log('Next state: ', store.getState())
-  console.groupEnd()
   return res
 }
 
