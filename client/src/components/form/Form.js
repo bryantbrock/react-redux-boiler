@@ -1,45 +1,24 @@
 import React, {Component} from 'react'
-import {TextInput, Button} from 'components'
+import {Button} from 'components'
+import {TextInput} from 'components/inputs'
+import {toObj} from 'utils/misc'
 import PropType from 'prop-types'
-
-const toObj = (array, key) => {
-  const initialValue = {}
-  return array.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[key]]: '',
-    }
-  }, initialValue)
-}
-
-const resetState = state => {
-  const newState = {}
-  for (let [key, value] of Object.entries(state)) {
-    newState[key] = ''
-  }
-  return newState
-}
 
 export class Form extends Component {
   constructor(props) {
     super(props)
     this.state = toObj(this.props.fields, 'name')
   }
-  onChange = (name, value) => {
-    this.setState({[name]: value})
-  }
+  onChange = (name, value) => this.setState({[name]: value})
   onSubmit = e => {
-    const {password} = this.state
     e.preventDefault()
-
-    // Verify password
+    // Verify password if need be
     if (this.state.verify) {
-      if (!(password === this.state.verify)) {
+      if (!(this.state.password === this.state.verify)) {
         this.props.throwErr('Passwords do not match')
         return 
       }
     }
-
     this.props.onSubmit(this.state)
 
   }

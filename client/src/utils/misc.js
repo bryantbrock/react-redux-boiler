@@ -13,3 +13,26 @@ export const once = (fn) => {
     return done ? void 0 : ((done = true), fn.apply(this, arguments))
   }
 }
+
+// ====================
+// Custom Utils
+
+// Turn an array into an object with empty string as values
+export const toObj = (array, key) => {
+  const initialValue = {}
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[key]]: '',
+    }
+  }, initialValue)
+}
+// If there is ever a 'clear form' button,
+// I will want this.
+export const resetState = state => {
+  const newState = {}
+  for (let [key, value] of Object.entries(state)) {
+    newState[key] = ''
+  }
+  return newState
+}
