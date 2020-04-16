@@ -29,11 +29,19 @@ export class Form extends Component {
     this.setState({[name]: value})
   }
   onSubmit = e => {
+    const {password} = this.state
     e.preventDefault()
+
+    // Verify password
+    if (this.state.verify) {
+      if (!(password === this.state.verify)) {
+        this.props.throwErr('Passwords do not match')
+        return 
+      }
+    }
+
     this.props.onSubmit(this.state)
-    
-    // A way to remove all entries if desires
-    // setTimeout(() => this.setState(resetState(this.state)), 2000)
+
   }
   render() {
     const {button, fields} = this.props
@@ -51,8 +59,8 @@ export class Form extends Component {
           </React.Fragment>
         ))}
         <Button
-          path={button.path}
           value={button.value}
+          onClick={this.onSubmit}
           color={button.color || 'primary'}/>
       </form>
     )

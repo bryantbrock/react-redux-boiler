@@ -10,4 +10,6 @@ export const ATypes = {
   // Error Handling
   POST_ERROR: 'POST_ERROR',
   GET_ERROR: 'GET_ERROR',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  CLEAR_ERRORS: 'CLEAR_ERRORS',
 }

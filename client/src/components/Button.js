@@ -1,30 +1,31 @@
 import React, {Component} from 'react'
-import {baseUrl} from 'app/constants'
 
 export class Button extends Component {
   render() {
-    const {color, value, path} = this.props
+    const {color, value} = this.props
 
     return (
-      <a
+      <button
         style={base}
-        href={`/${path}`}
+        onClick={this.props.onClick}
+        type="submit"
         color={color}>
           <span>{value}</span>
-      </a>
+      </button>
     )
   }
 }
 
 const base = {
   textDecoration: 'none',
+  cursor: 'pointer',
   color: '#000',
   border: '1px solid #eee',
-  borderRadius: '3px',
+  borderRadius: '50px',
   display: 'flex',
-  padding: '.5em',
+  padding: '1em',
   justifyContent: 'center',
-  maxWidth: '100px',
+  width: '100px',
 }
 
 export default Button
