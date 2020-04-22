@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import 'resources/css/main.css'
 
 export class Button extends Component {
   render() {
@@ -6,7 +7,7 @@ export class Button extends Component {
 
     return (
       <button
-        style={base}
+        className="button"
         onClick={this.props.onClick}
         type="submit"
         color={color}>
@@ -14,18 +15,6 @@ export class Button extends Component {
       </button>
     )
   }
-}
-
-const base = {
-  textDecoration: 'none',
-  cursor: 'pointer',
-  color: '#000',
-  border: '1px solid #eee',
-  borderRadius: '50px',
-  display: 'flex',
-  padding: '1em',
-  justifyContent: 'center',
-  width: '100px',
 }
 
 export default Button

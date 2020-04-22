@@ -3,9 +3,27 @@ html, body {
   padding: 0;
 }
 
-.input {
-  /* border: none; */
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  color: #000;
 }
-.input-fail {
-  border: 1px solid #FF0000;
+  input.input-fail {
+    border: 1px solid #FF0000;
+  }
+
+
+/* Button */
+button {
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+  border: 1px solid #eee;
+  border-radius: 50px;
+  display: flex;
+  padding: 1em;
+  justify-content: center;
+  width: 100px;
 }
