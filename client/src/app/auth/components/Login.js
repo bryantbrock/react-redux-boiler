@@ -37,7 +37,7 @@ export class Login extends Component {
           button={{
             value: 'login',
             color: 'primary',
-            path: '/login/settings',
+            path: 'dashboard',
           }} />
       </div>
     )
