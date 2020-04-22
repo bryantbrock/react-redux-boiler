@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {login} from 'app/auth/actions'
 import {clearErrors} from 'app/errors/actions'
-import {Form} from 'components/form'
+import {Form} from 'modules/form'
 import {loginFields} from 'app/auth/constants'
 import {redirectOnSuccess} from 'app/auth/selectors'
 
@@ -29,7 +29,7 @@ export class Login extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={classes.root}>
         <h2>Login</h2>
         <Form
           onSubmit={this.onSubmit}
@@ -41,6 +41,17 @@ export class Login extends Component {
           }} />
       </div>
     )
+  }
+}
+const classes = {
+  root: {
+    height: '100vh',
+    margin: 'auto',
+    width: '40%', 
+    padding: '100px 0', 
+    display: 'flex',
+    justifyContent: 'center',
+    background: '#FFF'
   }
 }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {register} from 'app/auth/actions'
-import {Form} from 'components/form'
+import {Form} from 'modules/form'
 import {registerFields} from 'app/auth/constants'
 import {clearErrors} from 'app/errors/actions'
 import {redirectOnSuccess} from 'app/auth/selectors'

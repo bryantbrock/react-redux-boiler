@@ -28,10 +28,13 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '90%',
+    height: '100vh',
     margin: 'auto',
-    width: '90%', 
-    marginTop: '100px', 
+    width: '100%', 
+    padding: '100px 0', 
+    display: 'flex',
+    justifyContent: 'center',
+    background: '#FFF'
   },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -66,7 +69,7 @@ export default function SignInSide() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      {/* <Grid item xs={false} sm={4} md={7} className={classes.image} /> */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -75,7 +78,10 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={(e) => {
+            e.preventDefault()
+            console.log()
+          }}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -85,8 +91,7 @@ export default function SignInSide() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
-            />
+              autoFocus/>
             <TextField
               variant="outlined"
               margin="normal"
@@ -96,21 +101,16 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
-            />
+              autoComplete="current-password"/>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+              label="Remember me"/>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
+              className={classes.submit}> Sign In </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

@@ -5,23 +5,39 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth')
 
-// User Model
 const User = require('../models/User')
 
 
 // @route   POST api/auth/sign-up
 router.post('/sign-up', (req, res) => {
-  const { name, email, password } = req.body;
-  console.log(name, email, password)
-  // Validation
-  if(!name || !email || !password) {
-    return res.status(400).json({msg: "Please fill out all of the fields"});
+  const {name, email, password, verify} = req.body
+  const items = {email, name, password, verify}
+  let emptyFields = []
+  const idOne = fields => res.status(400).json(
+    {
+      msg: "Please fill out all of the fields",
+      id: 1,
+      fields,
+    }
+  )
+
+  for (let [key, value] of Object.entries(items)) {
+    if (value === '') {
+      emptyFields.push(key)
+    }
   }
 
-  // Check for existing user
+  if(emptyFields.length > 0) {
+    return idOne(emptyFields)
+  }
+
+  if(password !== verify) {
+    return res.status(400).json({msg: "Passwords do not match", id: 2});
+  }
+
   User.findOne({ email })
   .then(user => {
-    if(user) return res.status(400).json({msg: "User already exists"});
+    if(user) return res.status(400).json({msg: "User already exists", id: 3});
 
     const newUser = new User ({
       name,
@@ -29,7 +45,6 @@ router.post('/sign-up', (req, res) => {
       password,
     });
 
-    // Create salt and hash 
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if(err) throw err;
@@ -66,12 +81,12 @@ router.post('/login', (req, res) => {
   // Check for existing user
   User.findOne({ email })
   .then(user => {
-    if(!user) return res.status(400).json({msg: "User does not exist"});
+    if(!user) return res.status(400).json({msg: "User does not exist", id: 4});
 
     // Validate password
     bcrypt.compare(password, user.password)
     .then(isMatch => {
-      if(!isMatch) return res.status(400).json({msg: "Invalid username or password"});
+      if(!isMatch) return res.status(400).json({msg: "Invalid username or password", id: 5});
 
       jwt.sign(
         { id: user.id },

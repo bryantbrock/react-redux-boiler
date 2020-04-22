@@ -1,41 +1,42 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {Button} from 'components'
 import {TextInput} from 'components/inputs'
 import {toObj} from 'utils/misc'
 import PropType from 'prop-types'
+import {selectSubmissionStatus} from 'modules/form/selectors'
+
+const formEnhancer = connect(
+  state => ({
+    failedFields: selectSubmissionStatus(state),
+  }),
+)
 
 export class Form extends Component {
-  constructor(props) {
-    super(props)
-    this.state = toObj(this.props.fields, 'name')
-  }
+  state = toObj(this.props.fields, 'name')
   onChange = (name, value) => this.setState({[name]: value})
   onSubmit = e => {
     const {button} = this.props
+
     e.preventDefault()
-
-    if (this.state.verify) {
-      if (!(this.state.password === this.state.verify)) {
-        this.props.throwErr('Passwords do not match')
-        return 
-      }
-    }
     this.props.onSubmit(this.state, button.path)
-
   }
   render() {
     const {button, fields} = this.props
+    const wording = button.value === 'login' ? 'Incorrect' : "Provide a "
 
     return (
       <form onSubmit={this.onSubmit}>
         {fields.map(({label, name, ...values}) => (
           <React.Fragment key={name}>
-            <label>{label}</label>
             <TextInput 
+              label={label}
               type={values.type}
               name={name}
               value={this.state[name]}
-              onChange={this.onChange} />
+              onChange={this.onChange}
+              failedFields={this.props.failedFields}
+              wording={wording} />
           </React.Fragment>
         ))}
         <Button
@@ -54,4 +55,4 @@ Form.propTypes = {
   button: PropType.object, 
 }
 
-export default Form
+export default formEnhancer(Form)
