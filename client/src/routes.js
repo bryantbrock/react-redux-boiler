@@ -1,12 +1,11 @@
 import {Home} from 'components'
-import {Register, Login} from 'app/auth'
+import {Register, Login, MaterialLogin} from 'app/auth'
 import {Dashboard} from 'app/dashboard'
 
 export const routes = [
   {
     path: "/home",
     component: Home,
-    routes: []
   },
   {
     path: "/sign-up",
@@ -15,6 +14,10 @@ export const routes = [
   {
     path: "/login",
     component: Login,
+  },
+  {
+    path: "/material-login",
+    component: MaterialLogin,
   },
   {
     path: "/dashboard",

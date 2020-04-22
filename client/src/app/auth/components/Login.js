@@ -4,15 +4,27 @@ import {login} from 'app/auth/actions'
 import {clearErrors} from 'app/errors/actions'
 import {Form} from 'components/form'
 import {loginFields} from 'app/auth/constants'
+import {redirectOnSuccess} from 'app/auth/selectors'
+
+const authEnhancer = connect(
+  state => ({
+    redirect: redirectOnSuccess(state),
+  }),
+  {
+    login,
+    clearErrors,
+  }
+)
 
 export class Login extends Component {
-  onSubmit = async data => {
-    await this.props.login(data)
+  onSubmit = async (data, path) => {
+    const {login, clearErrors, history} = this.props
 
-     // Redirect if registry success
-     if (this.props.status === 200 && this.props.redirect) {
-      this.props.history.push('/dashboard')
-      this.props.clearErrors()
+    await login(data)
+
+     if (this.props.redirect) {
+      history.push(`/${path}`)
+      clearErrors()
     }
   }
   render() {
@@ -25,16 +37,11 @@ export class Login extends Component {
           button={{
             value: 'login',
             color: 'primary',
-            path: 'dashboard',
+            path: '/login/settings',
           }} />
       </div>
     )
   }
 }
 
-const selector = state => ({
-  status: state.errors.status,
-  redirect: state.errors.redirect,
-})
-
-export default connect(selector, {login, clearErrors})(Login)
+export default authEnhancer(Login)

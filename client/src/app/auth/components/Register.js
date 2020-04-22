@@ -3,16 +3,27 @@ import {connect} from 'react-redux'
 import {register} from 'app/auth/actions'
 import {Form} from 'components/form'
 import {registerFields} from 'app/auth/constants'
-import {throwErr, clearErrors} from 'app/errors/actions'
+import {clearErrors} from 'app/errors/actions'
+import {redirectOnSuccess} from 'app/auth/selectors'
+
+const authEnhancer = connect(
+  state => ({
+    redirect: redirectOnSuccess(state),
+  }),
+  {
+    register,
+    clearErrors,
+  }
+)
 
 export class Register extends Component {
-  onSubmit = async data => {
-    await this.props.register(data)
+  onSubmit = async (data, path) => {
+    const {register, clearErrors, history} = this.props
+    await register(data)
 
-    // Redirect if registry success
-    if (this.props.status === 200 && this.props.redirect) {
-      this.props.history.push('/dashboard')
-      this.props.clearErrors()
+    if (this.props.redirect) {
+      history.push(`/${path}`)
+      clearErrors()
     }
   }
   render() {
@@ -34,9 +45,4 @@ export class Register extends Component {
   }
 }
 
-const selector = state => ({
-  status: state.errors.status,
-  redirect: state.errors.redirect,
-})
-
-export default connect(selector, {register, throwErr, clearErrors})(Register)
+export default authEnhancer(Register)

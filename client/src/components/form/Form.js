@@ -11,15 +11,16 @@ export class Form extends Component {
   }
   onChange = (name, value) => this.setState({[name]: value})
   onSubmit = e => {
+    const {button} = this.props
     e.preventDefault()
-    // Verify password if need be
+
     if (this.state.verify) {
       if (!(this.state.password === this.state.verify)) {
         this.props.throwErr('Passwords do not match')
         return 
       }
     }
-    this.props.onSubmit(this.state)
+    this.props.onSubmit(this.state, button.path)
 
   }
   render() {
@@ -39,6 +40,7 @@ export class Form extends Component {
         ))}
         <Button
           value={button.value}
+          path={button.path}
           onClick={this.onSubmit}
           color={button.color || 'primary'}/>
       </form>
