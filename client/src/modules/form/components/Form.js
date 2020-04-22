@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button} from 'components'
-import {Input} from 'components/inputs'
+import {Button, Input} from 'components'
 import {toObj} from 'utils/misc'
 import PropType from 'prop-types'
 import {selectSubmissionStatus, selectWording} from 'modules/form/selectors'
