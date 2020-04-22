@@ -1,1 +1,1 @@
-export {default as TextInput} from 'components/inputs/Input'
+export {default as Input} from 'components/inputs/Input'

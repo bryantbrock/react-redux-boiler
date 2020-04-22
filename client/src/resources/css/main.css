@@ -2,3 +2,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+.input {
+  /* border: none; */
+}
+.input-fail {
+  border: 1px solid #FF0000;
+}

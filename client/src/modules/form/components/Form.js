@@ -1,20 +1,23 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button} from 'components'
-import {TextInput} from 'components/inputs'
+import {Input} from 'components/inputs'
 import {toObj} from 'utils/misc'
 import PropType from 'prop-types'
-import {selectSubmissionStatus} from 'modules/form/selectors'
+import {selectSubmissionStatus, selectWording} from 'modules/form/selectors'
 
 const formEnhancer = connect(
   state => ({
     failedFields: selectSubmissionStatus(state),
+    getIfFailed: (name, fields) => selectWording(name, fields)
   }),
 )
 
 export class Form extends Component {
   state = toObj(this.props.fields, 'name')
-  onChange = (name, value) => this.setState({[name]: value})
+  onChange = e => {
+    this.setState({[e.target.name]: e.target.value})
+  }
   onSubmit = e => {
     const {button} = this.props
 
@@ -23,20 +26,23 @@ export class Form extends Component {
   }
   render() {
     const {button, fields} = this.props
-    const wording = button.value === 'login' ? 'Incorrect' : "Provide a "
+    const res = name => this.props.getIfFailed(name, this.props)
+    const failed = name => res(name).failed
+    const wording = name => res(name).wording
 
     return (
       <form onSubmit={this.onSubmit}>
         {fields.map(({label, name, ...values}) => (
           <React.Fragment key={name}>
-            <TextInput 
+            <Input 
               label={label}
               type={values.type}
               name={name}
               value={this.state[name]}
               onChange={this.onChange}
-              failedFields={this.props.failedFields}
-              wording={wording} />
+              failed={failed(name)} />
+              {failed(name) && 
+                <span>{wording(name)}</span>}
           </React.Fragment>
         ))}
         <Button
@@ -50,9 +56,13 @@ export class Form extends Component {
 }
 
 Form.propTypes = {
+  // Parent
   fields: PropType.array,
   onSubmit: PropType.func.isRequired,
-  button: PropType.object, 
+  button: PropType.object,
+  // Store
+  failedFields: PropType.object,
+  getIfFailed: PropType.func,
 }
 
 export default formEnhancer(Form)
