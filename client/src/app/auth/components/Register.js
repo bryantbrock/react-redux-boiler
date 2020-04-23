@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {register} from 'app/auth/actions'
+import {submitAuthForm} from 'app/auth/state'
 import {Form} from 'modules/form'
 import {registerFields} from 'app/auth/constants'
-import {clearErrors} from 'app/errors/actions'
+import {clearErrors} from 'app/errors/state'
 import {redirectOnSuccess} from 'app/auth/selectors'
 
 const authEnhancer = connect(
@@ -11,15 +11,16 @@ const authEnhancer = connect(
     redirect: redirectOnSuccess(state),
   }),
   {
-    register,
+    submitAuthForm,
     clearErrors,
   }
 )
 
 export class Register extends Component {
   onSubmit = async (data, path) => {
-    const {register, clearErrors, history} = this.props
-    await register(data)
+    const {submitAuthForm, clearErrors, history} = this.props
+
+    await submitAuthForm(data, 'auth/sign-up')
 
     if (this.props.redirect) {
       history.push(`/${path}`)
@@ -33,7 +34,6 @@ export class Register extends Component {
         <h2>Sign Up</h2>
         <Form
           onSubmit={this.onSubmit}
-          throwErr={this.props.throwErr}
           fields={registerFields}
           button={{
             value: 'Sign Up',

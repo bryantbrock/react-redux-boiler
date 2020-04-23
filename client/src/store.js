@@ -1,22 +1,13 @@
-import {createStore, applyMiddleware, compose} from 'redux'
 import rootReducer from 'app/reducers'
-import {crashReporter, logger, thunk} from './middleware'
+import {crashReporter, logger, thunk} from 'middleware'
+import {getDefaultMiddleware, configureStore} from '@reduxjs/toolkit'
 
-let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const middleware = [...getDefaultMiddleware(), logger, crashReporter, thunk]
 
-if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production') {
-  composeEnhancers = a => a
-}
+const store = configureStore({
+  reducer: rootReducer,
+  middleware,
+})
 
-const store = createStore(
-    rootReducer,
-    composeEnhancers(
-      applyMiddleware(
-        logger,
-        crashReporter,
-        thunk,
-      ),
-    )
-  )
 
 export default store

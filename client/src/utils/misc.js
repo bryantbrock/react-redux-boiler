@@ -31,7 +31,7 @@ export const toObj = (array, key) => {
 // I will want this.
 export const resetState = state => {
   const newState = {}
-  for (let [key, value] of Object.entries(state)) {
+  for (let [key] of Object.entries(state)) {
     newState[key] = ''
   }
   return newState

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {login} from 'app/auth/actions'
-import {clearErrors} from 'app/errors/actions'
+import {submitAuthForm} from 'app/auth/state'
+import {clearErrors} from 'app/errors/state'
 import {Form} from 'modules/form'
 import {loginFields} from 'app/auth/constants'
 import {redirectOnSuccess} from 'app/auth/selectors'
@@ -11,16 +11,16 @@ const authEnhancer = connect(
     redirect: redirectOnSuccess(state),
   }),
   {
-    login,
+    submitAuthForm,
     clearErrors,
   }
 )
 
 export class Login extends Component {
   onSubmit = async (data, path) => {
-    const {login, clearErrors, history} = this.props
+    const {submitAuthForm, clearErrors, history} = this.props
 
-    await login(data)
+    await submitAuthForm(data, 'auth/login')
 
      if (this.props.redirect) {
       history.push(`/${path}`)
