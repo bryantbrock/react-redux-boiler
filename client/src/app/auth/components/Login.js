@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {submitAuthForm} from 'app/auth/state'
 import {clearErrors} from 'app/errors/state'
 import {Form} from 'modules/form'
+import {Anchor} from 'components'
 import {loginFields} from 'app/auth/constants'
 import {redirectOnSuccess} from 'app/auth/selectors'
 
@@ -28,17 +29,17 @@ export class Login extends Component {
     }
   }
   render() {
+    const anchor = {path: '/sign-up', value: "Don't have an Account? Sign up"}
+    const button = {value: 'login', path: 'dashboard'}
+
     return (
       <div className={classes.root}>
         <h2>Login</h2>
         <Form
           onSubmit={this.onSubmit}
           fields={loginFields}
-          button={{
-            value: 'login',
-            color: 'primary',
-            path: 'dashboard',
-          }} />
+          anchor={anchor}
+          button={button} />
       </div>
     )
   }

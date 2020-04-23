@@ -16,7 +16,7 @@ input[type="email"] {
 
 
 /* Button */
-button {
+button.btn {
   text-decoration: none;
   cursor: pointer;
   color: #000;
@@ -27,3 +27,14 @@ button {
   justify-content: center;
   width: 100px;
 }
+
+/* Anchor */
+a.anchor {
+  text-decoration: none;
+  color: #2e5d94;
+  margin: 5px;
+}
+  a.anchor:hover {
+    text-decoration: underline;
+    color: #4486d1;
+  }

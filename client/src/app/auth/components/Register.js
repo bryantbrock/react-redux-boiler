@@ -28,6 +28,8 @@ export class Register extends Component {
     }
   }
   render() {
+    const anchor = {path: '/login', value: "Already have an Account? Login"}
+    const button = {value: 'Sign Up', path: 'dashboard'}
     
     return (
       <div>
@@ -35,11 +37,8 @@ export class Register extends Component {
         <Form
           onSubmit={this.onSubmit}
           fields={registerFields}
-          button={{
-            value: 'Sign Up',
-            color: 'primary',
-            path: 'dashboard',
-          }} /> 
+          anchor={anchor}
+          button={button} /> 
       </div>
     )
   }

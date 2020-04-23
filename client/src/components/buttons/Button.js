@@ -7,7 +7,7 @@ export class Button extends Component {
 
     return (
       <button
-        className="button"
+        className="btn"
         onClick={this.props.onClick}
         type="submit"
         color={color}>

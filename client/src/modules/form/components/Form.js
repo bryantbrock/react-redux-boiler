@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Input} from 'components'
+import {Button, Input, Anchor} from 'components'
 import {toObj} from 'utils/misc'
 import PropType from 'prop-types'
 import {selectSubmissionStatus, selectWording} from 'modules/form/selectors'
@@ -24,7 +24,7 @@ export class Form extends Component {
     this.props.onSubmit(this.state, button.path)
   }
   render() {
-    const {button, fields} = this.props
+    const {button, fields, anchor} = this.props
     const res = name => this.props.getIfFailed(name, this.props)
     const failed = name => res(name).failed
     const wording = name => res(name).wording
@@ -44,6 +44,11 @@ export class Form extends Component {
                 <span>{wording(name)}</span>}
           </React.Fragment>
         ))}
+        {anchor && 
+          <Anchor 
+            path={anchor.path}
+            value={anchor.value} />
+        }
         <Button
           value={button.value}
           path={button.path}
