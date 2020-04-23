@@ -4,5 +4,5 @@ import {Dashboard} from 'app/dashboard'
 export const routes = [
   {path: "/sign-up", component: Register},
   {path: "/login", component: Login},
-  {path: "/dashboard", component: Dashboard, public: false},
+  {path: "/dashboard", component: Dashboard, private: true},
 ]

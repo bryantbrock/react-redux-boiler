@@ -1,6 +1,5 @@
 import {createReducer, createAction} from '@reduxjs/toolkit'
 import {req} from 'app/requests'
-import {logout} from  'app/dashboard/state'
   
 // Setup
 const getToken = getState => getState().auth.token
@@ -15,10 +14,12 @@ const initialState = {
 export const setSubmitted = createAction('FORM_SUBMITTED')
 export const success = createAction('SUCCESS')
 export const error = createAction('ERROR')
+export const logout = createAction('LOGOUT')
 
 // Thunks
+export const logoutUser = () => dispatch => dispatch(logout())
 export const submitAuthForm = (user, url = '') => async (dispatch, getState) => {
-  dispatch(setSubmitted)
+  dispatch(setSubmitted())
   await req.postJSON(`/api/${url}`, getToken(getState), user)
     .then(res => dispatch(success(res.data)))
     .catch(err => dispatch(error(err.response)))

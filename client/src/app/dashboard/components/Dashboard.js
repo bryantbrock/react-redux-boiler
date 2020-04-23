@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {logoutUser} from 'app/dashboard/state'
+import {logoutUser} from 'app/auth/state'
 
 const enchanceDashboard = connect(
   null,

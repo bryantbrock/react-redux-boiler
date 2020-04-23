@@ -1,21 +1,19 @@
 import React from 'react'
 import {Provider} from 'react-redux'
-import {BrowserRouter, Switch} from "react-router-dom"
-import {RouteWithSubRoutes, routes} from 'app/routing'
+import {BrowserRouter} from "react-router-dom"
+import {Routing} from "app/routing"
 import store from 'store'
 
-function App() {
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Switch>
-          {routes.map((route, i) => (
-            <RouteWithSubRoutes key={i} {...route} />
-          ))}
-        </Switch>
-      </BrowserRouter>
-    </Provider>
-  )
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routing />
+        </BrowserRouter>
+      </Provider>
+    )
+  }
 }
 
 export default App
