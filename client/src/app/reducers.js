@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import AuthReducer from 'app/auth/state'
-import ErrorReducer from 'app/errors/state'
+import {Auth} from 'app/auth'
+import {Errors} from 'app/errors'
 
 export default combineReducers({
-  auth: AuthReducer,
-  errors: ErrorReducer,
+  auth: Auth.reducer,
+  errors: Errors.reducer,
 })

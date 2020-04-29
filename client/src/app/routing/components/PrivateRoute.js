@@ -1,13 +1,25 @@
 import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
 
+const enhanceRouting = connect(
+  state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+  }),
+)
 
-export default function PrivateRoute({component: Component, ...opts}) {
-  return (
-    <Route {...opts} render={(props) => (
-      opts.isAuthenticated === true
-        ? <Component {...props} />
-        : <Redirect to='/login' />
-    )} />
-  )
+class PrivateRoute extends React.Component {
+  render() {
+    const {Component, isAuthenticated} = this.props
+
+    return (
+      <Route render={() => (
+        isAuthenticated
+          ? <Component />
+          : <Redirect to='/login' />
+      )} />
+    )
+  }
 }
+
+export default enhanceRouting(PrivateRoute)

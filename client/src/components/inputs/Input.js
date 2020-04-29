@@ -9,12 +9,12 @@ export class Input extends Component {
     return (
       <input
         type={type || 'text'}
-        required
-        label={label}
         name={name}
+        id={name}
+        placeholder={label}
         value={this.props.value}
         onChange={e => onChange(e)}
-        className={className} />
+        className={!failed ? className : 'form-input-fail'} />
     )
   }
 }

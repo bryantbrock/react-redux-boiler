@@ -1,7 +1,9 @@
 import axios from "axios"
 
 const createRequest = (method, {headers, body}) => (url, token) => {
-  const config = {'x-auth-token': token, ...headers}
+  const config = {
+    'x-auth-token': token, ...headers,
+  }
 
   return axios[method](
     url,
@@ -16,6 +18,6 @@ const createPostRequest = (headers, fn) => (url, token, data) => {
 }
 
 export const req = {
-  postJSON: createPostRequest({'content-type': 'application/json'}),
+  postJSON: createPostRequest({'Content-Type': 'application/json'}),
   get: createRequest('get', {headers: ''}),
 }

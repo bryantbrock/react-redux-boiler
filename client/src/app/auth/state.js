@@ -1,47 +1,53 @@
-import {createReducer, createAction} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import {req} from 'app/requests'
-  
-// Setup
-const getToken = getState => getState().auth.token
+import {Errors} from 'app/errors'
+
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  isAuthenticated: localStorage.getItem('token') ? true : false,
   isLoading: false,
   user: {},
 }
 
-// Actions
-export const setSubmitted = createAction('FORM_SUBMITTED')
-export const success = createAction('SUCCESS')
-export const error = createAction('ERROR')
-export const logout = createAction('LOGOUT')
+export const Auth = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setSubmitted: state => ({...state, isLoading: true}),
+    logout: state => ({...state, isAuthenticated: false, user: {}}),
+    authError: state => ({...state, isLoading: false, isAuthenticated: false}),
+    authSuccess: (state, action) => 
+      ({...state, user: action.payload.user, isAuthenticated: true, isLoading: false})
+  }
+})
+
+
+// Logic
+const getToken = getState => getState().auth.token
+const setSuccess = res => dispatch => {
+  dispatch(Auth.actions.authSuccess(res))
+  dispatch(Errors.actions.success())
+}
+const setError = err => dispatch => {
+  dispatch(Auth.actions.authError(err))
+  dispatch(Errors.actions.error(err))
+}
 
 // Thunks
-export const logoutUser = () => dispatch => dispatch(logout())
+export const logoutUser = () => dispatch => {
+  dispatch(Auth.actions.logout())
+  localStorage.removeItem('token')
+}
 export const submitAuthForm = (user, url = '') => async (dispatch, getState) => {
-  dispatch(setSubmitted())
+  dispatch(Auth.actions.setSubmitted())
   await req.postJSON(`/api/${url}`, getToken(getState), user)
-    .then(res => dispatch(success(res.data)))
-    .catch(err => dispatch(error(err.response)))
+    .then(res => {
+      dispatch(setSuccess(res.data))
+      localStorage.setItem('token', res.data.token)
+    })
+    .catch(err => dispatch(setError(err.response)))
   return
 }
 
-// Reducer
-const reducer = createReducer(initialState, {
-  [setSubmitted]: state => ({...state, isLoading: true}),
-  [logout]: state => {
-    localStorage.removeItem('token')
-    return {
-      ...state,
-      isAuthenticated: false,
-      user: {},
-    }
-  },
-  [error]: state => ({...state, isLoading: false, isAuthenticated: false}),
-  [success]: (state, action) => {
-    localStorage.setItem('token', action.payload.token)
-    return {...state, user: action.payload.user, isAuthenticated: true, isLoading: false}
-  },
-})
-
-export default reducer
+// Export the slice
+export default Auth

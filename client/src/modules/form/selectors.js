@@ -14,17 +14,3 @@ export const selectSubmissionStatus = state => {
 
   return {}
 }
-
-export const selectWording = (name, props) => {
-  const basic = props.button.value === 'login' ? 'Incorrect' : "Provide a "
-  let wording = (name === 'verify') ? "Verify Password Failed" : basic + ' ' + name
-  let failed = false
-
-  if (props.failedFields[name]) {
-    failed = true
-    if (props.failedFields.message) {
-      wording = props.failedFields.message
-    }
-  }
-  return {wording, failed}
-}

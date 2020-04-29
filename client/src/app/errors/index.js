@@ -1,1 +1,1 @@
-export {default as ErrorReducer} from 'app/auth/state'
+export {default as Errors} from 'app/errors/state'

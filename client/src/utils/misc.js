@@ -7,7 +7,7 @@ export const log = res => console.log(res)
 export const compose = (...fns) => (args) => 
   fns.reverse().reduceRight((arg, fn) => fn(arg), args)
 export const once = (fn) => {
-  var done = false;
+  var done = false
   
   return function () {
     return done ? void 0 : ((done = true), fn.apply(this, arguments))
@@ -36,3 +36,5 @@ export const resetState = state => {
   }
   return newState
 }
+
+export const NBSP = '\u00a0'
