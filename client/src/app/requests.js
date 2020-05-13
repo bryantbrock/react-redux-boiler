@@ -1,23 +1,14 @@
 import axios from "axios"
 
-const createRequest = (method, {headers, body}) => (url, token) => {
-  const config = {
-    'x-auth-token': token, ...headers,
-  }
-
-  return axios[method](
-    url,
-    body,
-    config
-  )
-}
-const createPostRequest = (headers, fn) => (url, token, data) => {
+const createRequest = method => (url, config, body = {}) => 
+  body ? axios[method](url, config, body) : axios[method](url, config)
+const createPostRequest = fn => (url, config, data) => {
   const body = fn ? fn(data) : data
   
-  return createRequest('post', {headers, body})(url, token)
+  return createRequest('post')(url, config, body)
 }
 
 export const req = {
-  postJSON: createPostRequest({'Content-Type': 'application/json'}),
-  get: createRequest('get', {headers: ''}),
+  postJSON: createPostRequest(),
+  get: createRequest('get'),
 }

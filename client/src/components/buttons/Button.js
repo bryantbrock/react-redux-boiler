@@ -11,7 +11,7 @@ const enhanceButton = connect(
 
 export class Button extends Component {
   render() {
-    const {color, value, className} = this.props
+    const {color, value, className, children} = this.props
 
     return (
       <button
@@ -19,7 +19,11 @@ export class Button extends Component {
         onClick={this.props.onClick}
         type="submit"
         color={color}>
-          <span hidden={this.props.isLoading}>{value}</span><Spinner visible={this.props.isLoading} />
+          <span 
+            hidden={this.props.isLoading}>
+            {value || children}
+          </span>
+          <Spinner visible={this.props.isLoading} />
       </button>
     )
   }

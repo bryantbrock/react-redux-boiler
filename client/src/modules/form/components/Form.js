@@ -31,14 +31,13 @@ class Form extends Component {
     this.props.onSubmit(this.state)
   }
   renderFields(fields) {
-    const {failedFields} = this.props
-    console.log(failedFields)
+
     return (
       <div>
         {fields.map(({label, name, type}) => {
-          const {failedFields} = this.props
-          const failed = Boolean(failedFields[name])
-          const message = failedFields.message || 'Invalid'
+          const failed = Boolean(this.props.failedFields[name])
+          const message = this.props.failedFields.message 
+            || 'Invalid ' + name
 
           return (
             <React.Fragment key={name}>

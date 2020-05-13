@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Button, Nav, Display} from 'components'
 import {logoutUser} from 'app/auth/state'
+import 'resources/css/pages.css'
 
 const enchanceDashboard = connect(
   null,
@@ -16,7 +18,9 @@ export class Dashboard extends Component {
   render() {
 
     return (
-      <div>
+      <div className="dashboard-root">
+        <Nav />
+        <Display /> 
         <span>
           Inflation Monitor Dashboard<br></br><br></br>
           This will show current Reported Inflation,<br></br>
@@ -26,7 +30,9 @@ export class Dashboard extends Component {
           (if I can get ahold of any data on that). Finally that will<br></br>
           give you an accurate picture of inflation and possible bubbles.
         </span>
-        <button onClick={() => this.logout()}>Logout</button>
+        <Button
+          className="outlined w-200"
+          onClick={() => this.logout()}>Logout</Button>
       </div>
     )
   }

@@ -21,12 +21,11 @@ input[type="email"] {
     color: #07295575;
   }
 
-
 /* Button */
 button {
+  border: none;
   outline: none;
   cursor: pointer;
-  color: #000;
   background: #123d75;
   color: #ffffff;
   font-size: 15px;
@@ -43,6 +42,15 @@ button {
   button:hover {
     background:#123d75cc;
   }
+  button.outlined {
+    border: 1px solid #123d75;
+    background: #FFFFFF;
+    color: #123d75;
+  }
+    button.outlined:hover {
+      background:#123d75cc;
+      color: #FFFFFF;
+    }
 
 /* Anchor */
 a {

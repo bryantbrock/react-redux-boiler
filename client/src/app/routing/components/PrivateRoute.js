@@ -4,19 +4,17 @@ import {connect} from 'react-redux'
 
 const enhanceRouting = connect(
   state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    token: state.auth.token,
   }),
 )
 
 class PrivateRoute extends React.Component {
   render() {
-    const {Component, isAuthenticated} = this.props
+    const {Component, token} = this.props
 
     return (
       <Route render={() => (
-        isAuthenticated
-          ? <Component />
-          : <Redirect to='/login' />
+        token ? <Component /> : <Redirect to='/login' />
       )} />
     )
   }

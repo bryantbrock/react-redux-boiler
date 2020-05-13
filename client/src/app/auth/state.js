@@ -1,10 +1,10 @@
+import axios from 'axios'
 import {createSlice} from '@reduxjs/toolkit'
-import {req} from 'app/requests'
 import {Errors} from 'app/errors'
 
 const initialState = {
-  token: localStorage.getItem('token'),
-  isAuthenticated: localStorage.getItem('token') ? true : false,
+  token: null,
+  isAuthenticated: null,
   isLoading: false,
   user: {},
 }
@@ -12,12 +12,12 @@ const initialState = {
 export const Auth = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
+  reducers: { 
     setSubmitted: state => ({...state, isLoading: true}),
-    logout: state => ({...state, isAuthenticated: false, user: {}}),
-    authError: state => ({...state, isLoading: false, isAuthenticated: false}),
+    logout: state => ({...state, isAuthenticated: false, user: {}, token: null}),
+    authError: state => ({...state, isLoading: false, isAuthenticated: false, token: null}),
     authSuccess: (state, action) => 
-      ({...state, user: action.payload.user, isAuthenticated: true, isLoading: false})
+      ({...state, user: action.payload.user, isAuthenticated: true, isLoading: false, token: action.payload.token})
   }
 })
 
@@ -35,15 +35,19 @@ const setError = err => dispatch => {
 
 // Thunks
 export const logoutUser = () => dispatch => {
-  dispatch(Auth.actions.logout())
-  localStorage.removeItem('token')
+  try {
+    localStorage.removeItem('token')
+    dispatch(Auth.actions.logout())
+  } catch (err) {
+    console.error('failed to logout')
+  }
 }
 export const submitAuthForm = (user, url = '') => async (dispatch, getState) => {
   dispatch(Auth.actions.setSubmitted())
-  await req.postJSON(`/api/${url}`, getToken(getState), user)
+  await axios.post(`/api/auth/${url}`, user, getToken(getState))
     .then(res => {
-      dispatch(setSuccess(res.data))
       localStorage.setItem('token', res.data.token)
+      dispatch(setSuccess(res.data))
     })
     .catch(err => dispatch(setError(err.response)))
   return

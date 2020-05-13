@@ -10,7 +10,6 @@ export class Routing extends Component {
           ? <PrivateRoute 
               key={i}
               Component={route.component} 
-              isAuthenticated={this.props.isAuthenticated}
               {...route}/>
           : <RouteWithSubRoutes key={i} {...route} />
         )}
