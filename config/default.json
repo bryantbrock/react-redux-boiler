@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://bryantbrock:P0ssumPantryParty@provisions-cl1dq.mongodb.net/test?retryWrites=true&w=majority",
-  "localMongoURI": "mongodb://localhost:27017",
-  "jwtSecret": "test"
-}
